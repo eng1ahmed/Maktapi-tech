@@ -9,15 +9,13 @@
       type: 'presentation',
       stream: null,
       videoElement: null,
-      thumbnail: '/thank-you-slide.jpg', // We'll need to ensure this image exists
+      thumbnail: '/thank-you-slide.jpg',
       content: {
         title: 'Thank You!',
         subtitle: '@company.name     www.company.com     (123) 456-7890'
       }
     },
   ];
-
-  let draggedItem = null;
 
   // Add new functions for button actions
   function handleSelectAll() {
@@ -51,6 +49,7 @@
     e.preventDefault();
     const sourceType = e.dataTransfer.getData('sourceType');
     const sourceId = e.dataTransfer.getData('sourceId');
+    const isScreenShare = e.dataTransfer.getData('isScreenShare') === 'true';
     
     // Calculate drop position relative to video wall
     const rect = e.currentTarget.getBoundingClientRect();
@@ -79,7 +78,7 @@
         } catch (err) {
           console.error('Failed to get camera:', err);
         }
-      } else if (sourceType === 'screen') {
+      } else if (isScreenShare) {
         try {
           stream = await navigator.mediaDevices.getDisplayMedia({ 
             video: {
@@ -104,9 +103,7 @@
         videoElement: null,
         position: {
           x: gridX,
-          y: gridY,
-          pixelX: x,
-          pixelY: y
+          y: gridY
         }
       };
 
@@ -116,8 +113,7 @@
           id: sourceId,
           type: sourceType,
           position: {
-            grid: { x: gridX, y: gridY },
-            pixel: { x: Math.round(x), y: Math.round(y) }
+            grid: { x: gridX, y: gridY }
           }
         },
         wallInfo: {
@@ -127,11 +123,7 @@
             cellWidth: Math.round(cellWidth),
             cellHeight: Math.round(cellHeight)
           }
-        },
-        existingElements: videoWallItems.map(item => ({
-          id: item.id,
-          type: item.type
-        }))
+        }
       });
 
       videoWallItems = [...videoWallItems, newItem];
@@ -172,7 +164,10 @@
   <div class="video-wall" on:dragover={handleDragOver} on:drop={handleDrop}>
     <div class="video-grid" style="--grid-columns: {Math.ceil(Math.sqrt(videoWallItems.length))}">
       {#each videoWallItems as item (item.id)}
-        <div class="video-item">
+        <div 
+          class="video-item"
+          style="grid-column: {item.position.x + 1}; grid-row: {item.position.y + 1};"
+        >
           {#if item.type === 'camera' || item.type === 'screen'}
             <video 
               autoplay 
@@ -376,9 +371,11 @@
   .video-grid {
     display: grid;
     grid-template-columns: repeat(var(--grid-columns), 1fr);
+    grid-auto-rows: 1fr;
     gap: 1rem;
     width: 100%;
     height: 100%;
+    min-height: 0;
   }
 
   .video-item {
@@ -388,6 +385,7 @@
     border-radius: 8px;
     overflow: hidden;
     border: 1px solid #eee;
+    transition: all 0.3s ease;
   }
 
   .video-item video {
@@ -553,5 +551,10 @@
     color: white;
     font-size: 0.75rem;
     font-weight: 500;
+  }
+
+  .video-item:hover {
+    border-color: #0078d4;
+    box-shadow: 0 2px 8px rgba(0, 120, 212, 0.1);
   }
 </style> 
