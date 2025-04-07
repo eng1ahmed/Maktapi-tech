@@ -25,7 +25,7 @@
   }
 </script>
 
-<div class="source-panel">
+<div class="source-panel" style="border-radius: 20px;">
   <div class="search-bar">
     <input type="text" placeholder="Search" />
   </div>
@@ -66,6 +66,7 @@
     display: flex;
     flex-direction: column;
     padding: 1rem;
+    border-radius: 20px;
   }
 
   .search-bar {

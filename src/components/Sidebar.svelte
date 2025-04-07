@@ -92,7 +92,7 @@
     e.dataTransfer.effectAllowed = 'copy';
   }
 </script>
-
+<div class="sidebar-container">
 <div class="layout">
   <!-- Left Icon Menu -->
   <div class="icon-menu">
@@ -160,11 +160,19 @@
     </div>
   </div>
 </div>
-
+</div>
 <style>
+  .sidebar-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    position: relative;
+  }
   .layout {
     display: flex;
     height: 99vh;
+    position: relative;
+    border-radius: 20px;
   }
 
   /* Icon Menu Styles */

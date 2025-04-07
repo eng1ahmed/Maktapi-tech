@@ -51,6 +51,7 @@
 		width: 100%;
 		max-height: 100vh;
 		position: relative;
+		background-color: #f5f5f5;
 	}
 	
 	.content {
@@ -61,6 +62,7 @@
 		display: flex;
 		flex-direction: column;
 		gap: 1rem;
+		overflow-x: hidden;
 	}
 
 	.main-content {

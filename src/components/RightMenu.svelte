@@ -452,7 +452,25 @@
     padding: 1rem 0;
     box-sizing: border-box;
     height: 100vh;
-    border-radius: 100px !important;
+    border-top-left-radius: 50px;
+    border-bottom-left-radius: 50px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 20px;
+  }
+
+  .right-menu::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.945) 0%, rgb(0, 0, 0));
+    border-top-left-radius: 50px;
+    border-bottom-left-radius: 50px;
+    pointer-events: none;
+    border-radius: 50px;
   }
 
   .menu-items {

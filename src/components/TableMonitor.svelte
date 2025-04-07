@@ -221,6 +221,7 @@
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 1rem;
     overflow: auto;
+    overflow-x: hidden;
     background-color: #f8f8f8;
   }
 
